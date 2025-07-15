@@ -4,146 +4,216 @@
     <meta charset="UTF-8">
     <title>Manajemen Produk - Beeru</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        :root {
+            --beeru: #74b0f8;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--beeru);
+        }
+
+        .navbar-brand, .nav-link, .navbar-text {
+            color: #fff !important;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--beeru);
+            border-color: var(--beeru);
+        }
+
+        .btn-primary:hover {
+            background-color: #5d99e6;
+            border-color: #5d99e6;
+        }
+
+        .table thead {
+            background-color: var(--beeru);
+            color: white;
+        }
+    </style>
 </head>
-<body class="p-5">
+<body>
 
-    <div class="container">
-        <h2 class="mb-4">Manajemen Produk</h2>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Mini Manajemen Produk</a>
+            <span class="navbar-text ms-auto">by Fajar Mustaqin</span>
+        </div>
+    </nav>
 
-        <!-- Form Tambah Produk -->
-        <form id="productForm" class="mb-4">
-            <input type="hidden" id="product_id">
-            <div class="row g-2">
-                <div class="col-md-3">
-                    <input type="text" class="form-control" id="nama_produk" placeholder="Nama Produk" required>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="sku" placeholder="SKU" required>
-                </div>
-                <div class="col-md-2">
-                    <input type="number" class="form-control" id="harga" placeholder="Harga" required>
-                </div>
-                <div class="col-md-2">
-                    <input type="number" class="form-control" id="stok" placeholder="Stok" required>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-success w-100" id="submitBtn">Simpan Produk</button>
-                </div>
-            </div>
-        </form>
+    <!-- Konten -->
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Kelola Produk</h2>
+            <button class="btn btn-primary" onclick="openModal()">Tambah Produk</button>
+        </div>
 
         <!-- Tabel Produk -->
-        <table class="table table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nama</th>
-                    <th>SKU</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="productTable">
-                <!-- Data akan diisi lewat JS -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>SKU</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTable">
+                    <!-- Data akan diisi lewat JS -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    const API_URL = "/api/products";
+    <!-- Modal Form -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="productForm" class="modal-content">
+                <input type="hidden" id="product_id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel">Tambah Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label for="nama_produk" class="form-label">Nama Produk</label>
+                        <input type="text" class="form-control" id="nama_produk" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="sku" class="form-label">SKU</label>
+                        <input type="text" class="form-control" id="sku" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="harga" class="form-label">Harga</label>
+                        <input type="number" class="form-control" id="harga" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="stok" class="form-label">Stok</label>
+                        <input type="number" class="form-control" id="stok" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">💾 Simpan Produk</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    <!-- Script -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = "/api/products";
+        const modal = new bootstrap.Modal(document.getElementById('productModal'));
 
-
-    // Ambil Data Produk
-    function fetchProducts() {
-        $.get(API_URL, function(data) {
-            let rows = '';
-            data.forEach(item => {
-                rows += `
-                    <tr>
-                        <td>${item.nama_produk}</td>
-                        <td>${item.sku}</td>
-                        <td>${item.harga}</td>
-                        <td>${item.stok}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm me-2" onclick="editProduct(${item.id})">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${item.id})">Hapus</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            $('#productTable').html(rows);
-        });
-    }
-
-    // Tambah atau Update Produk
-    $('#productForm').submit(function(e) {
-        e.preventDefault();
-        const id = $('#product_id').val();
-        const method = id ? 'PUT' : 'POST';
-        const url = id ? `${API_URL}/${id}` : API_URL;
-
-        $.ajax({
-            url: url,
-            type: method,
-            data: {
-                nama_produk: $('#nama_produk').val(),
-                sku: $('#sku').val(),
-                harga: $('#harga').val(),
-                stok: $('#stok').val(),
-                _method: method,
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function() {
-                $('#productForm')[0].reset();
-                $('#product_id').val('');
-                $('#submitBtn').text('Simpan Produk');
-                fetchProducts();
-            },
-            error: function(xhr) {
-                alert('Gagal: ' + JSON.stringify(xhr.responseJSON.errors));
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-
         });
-    });
 
-    // Edit Produk
-    function editProduct(id) {
-        $.get(`${API_URL}`, function(data) {
-            const produk = data.find(p => p.id === id);
-            $('#product_id').val(produk.id);
-            $('#nama_produk').val(produk.nama_produk);
-            $('#sku').val(produk.sku);
-            $('#harga').val(produk.harga);
-            $('#stok').val(produk.stok);
-            $('#submitBtn').text('Update Produk');
-        });
-    }
+        function fetchProducts() {
+            $.get(API_URL, function(data) {
+                let rows = '';
+                let no = 1;
+                data.forEach(item => {
+                    rows += `
+                        <tr>
+                            <td>${no++}</td>
+                            <td>${item.nama_produk}</td>
+                            <td>${item.sku}</td>
+                            <td>${parseInt(item.harga).toLocaleString('id-ID')}</td>
+                            <td>${item.stok}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm me-2 tx" onclick="editProduct(${item.id})"><span class="material-icons text-white"S>edit</span></button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${item.id})"><span class="material-icons">delete</span></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                $('#productTable').html(rows);
+            });
+        }
 
-    // Hapus Produk
-    function deleteProduct(id) {
-        if (confirm('Yakin mau hapus produk ini?')) {
+        function openModal() {
+            $('#productForm')[0].reset();
+            $('#product_id').val('');
+            $('#productModalLabel').text('Tambah Produk');
+            $('#submitBtn').text('Simpan Produk');
+            modal.show();
+        }
+
+        $('#productForm').submit(function(e) {
+            e.preventDefault();
+            const id = $('#product_id').val();
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/${id}` : API_URL;
+
             $.ajax({
-                url: `${API_URL}/${id}`,
-                type: 'DELETE',
+                url: url,
+                type: method,
                 data: {
+                    nama_produk: $('#nama_produk').val(),
+                    sku: $('#sku').val(),
+                    harga: $('#harga').val(),
+                    stok: $('#stok').val(),
+                    _method: method,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
-                success: fetchProducts
+                success: function() {
+                    modal.hide();
+                    fetchProducts();
+                },
+                error: function(xhr) {
+                    alert('Gagal: ' + JSON.stringify(xhr.responseJSON.errors));
+                }
+            });
+        });
+
+        function editProduct(id) {
+            $.get(`${API_URL}`, function(data) {
+                const produk = data.find(p => p.id === id);
+                $('#product_id').val(produk.id);
+                $('#nama_produk').val(produk.nama_produk);
+                $('#sku').val(produk.sku);
+                $('#harga').val(produk.harga);
+                $('#stok').val(produk.stok);
+                $('#productModalLabel').text('Edit Produk');
+                $('#submitBtn').text('Update Produk');
+                modal.show();
             });
         }
-    }
 
-    // Load awal
-    $(document).ready(fetchProducts);
-</script>
+        function deleteProduct(id) {
+            if (confirm('Yakin mau hapus produk ini?')) {
+                $.ajax({
+                    url: `${API_URL}/${id}`,
+                    type: 'DELETE',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: fetchProducts
+                });
+            }
+        }
+
+        $(document).ready(fetchProducts);
+    </script>
 
 </body>
 </html>
+x
