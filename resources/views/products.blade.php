@@ -5,6 +5,7 @@
     <title>Manajemen Produk - Beeru</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
@@ -107,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">💾 Simpan Produk</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Simpan Produk</button>
                 </div>
             </form>
         </div>
@@ -125,6 +126,22 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        function showNotification(message, status = 'success') {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: status,
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#fff',
+                color: '#000'
+            });
+        }
+
+
 
         function fetchProducts() {
             $.get(API_URL, function(data) {
@@ -162,6 +179,7 @@
             const id = $('#product_id').val();
             const method = id ? 'PUT' : 'POST';
             const url = id ? `${API_URL}/${id}` : API_URL;
+            const message = method === 'POST' ? 'Produk berhasil ditambahkan!' : 'Produk berhasil diperbarui!';
 
             $.ajax({
                 url: url,
@@ -177,9 +195,10 @@
                 success: function() {
                     modal.hide();
                     fetchProducts();
+                    showNotification(message);
                 },
                 error: function(xhr) {
-                    alert('Gagal: ' + JSON.stringify(xhr.responseJSON.errors));
+                    showNotification('Gagal ' + JSON.stringify(xhr.responseJSON.errors) ,'error');
                 }
             });
         });
@@ -199,17 +218,33 @@
         }
 
         function deleteProduct(id) {
-            if (confirm('Yakin mau hapus produk ini?')) {
-                $.ajax({
-                    url: `${API_URL}/${id}`,
-                    type: 'DELETE',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: fetchProducts
-                });
-            }
+            Swal.fire({
+                title: 'Yakin mau hapus?',
+                text: "Data produk akan hilang permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#74b0f8', // Warna Beeru
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `${API_URL}/${id}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function () {
+                            fetchProducts();
+
+                            showNotification('produk berhasil dihapus!');
+                        }
+                    });
+                }
+            });
         }
+
 
         $(document).ready(fetchProducts);
     </script>
