@@ -12,7 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return Product::all();
     }
 
     /**
@@ -54,22 +54,17 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
         $product->update($request->all());
         return $product;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         Product::destroy($id);
         return response()->json(['message' => 'Produk dihapus']);
     }
+
 }
