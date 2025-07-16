@@ -157,23 +157,33 @@
         function fetchProducts() {
             $.get(API_URL, function(res) {
                 let rows = '';
-                let no = 1;
-                res.data.forEach(item => {
-                    rows += `
+
+                if (res.data.length === 0) {
+                    rows = `
                         <tr>
-                            <td>${no++}</td>
-                            <td>${item.nama_produk}</td>
-                            <td>${item.sku}</td>
-                            <td>${parseInt(item.harga).toLocaleString('id-ID')}</td>
-                            <td>${item.stok}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm me-2 tx" onclick="editProduct(${item.id})"><span class="material-icons text-white"S>edit</span></button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${item.id})"><span class="material-icons">delete</span></button>
-                            </td>
+                            <td colspan="6" class="text-center text-muted">Belum ada produk ditambahkan.</td>
                         </tr>
                     `;
-                });
+                } else {
+                    let no = 1;
+                    res.data.forEach(item => {
+                        rows += `
+                            <tr>
+                                <td>${no++}</td>
+                                <td>${item.nama_produk}</td>
+                                <td>${item.sku}</td>
+                                <td>${parseInt(item.harga).toLocaleString('id-ID')}</td>
+                                <td>${item.stok}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm me-2 tx" onclick="editProduct(${item.id})"><span class="material-icons text-white"S>edit</span></button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${item.id})"><span class="material-icons">delete</span></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
                 $('#productTable').html(rows);
+    
             });
         }
 
