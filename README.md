@@ -6,8 +6,8 @@ Aplikasi web sederhana untuk manajemen produk
 
 ## 🚀 Fitur Utama
 
-✅ CRUD Produk
-✅ RESTful API
+✅ CRUD Produk   
+✅ RESTful API   
 ✅ AJAX Interaktif (Tanpa Reload)  
 ✅ Styling responsive dengan Bootstrap  
 ✅ Error handling & notifikasi interaktif  
@@ -80,7 +80,7 @@ Akses: [http://localhost:8000](http://localhost:8000)
 
 ## 🧪 Tes API via Postman
 
-1. Import file: [`Mini Manajemen Produk API.postman_collection`](./Mini Manajemen Produk API.postman_collection)
+1. Import file: [`Mini Manajemen Produk API.postman_collection`](./Mini_Manajemen_Produk_API.postman_collection)
 2. Ganti `{{base_url}}` menjadi `http://localhost:8000`
 
 ### Endpoint Tersedia:
