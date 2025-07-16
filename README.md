@@ -1,13 +1,13 @@
 # 🛍️ Mini Product Management App
 
-Aplikasi web sederhana berbasis Laravel 12 + jQuery untuk manajemen produk — dibuat sebagai studi kasus rekruitasi Beeru.
+Aplikasi web sederhana untuk manajemen produk
 
 ---
 
 ## 🚀 Fitur Utama
 
-✅ CRUD Produk (Nama Produk, SKU, Harga, Stok)  
-✅ RESTful API dengan Laravel 12  
+✅ CRUD Produk
+✅ RESTful API
 ✅ AJAX Interaktif (Tanpa Reload)  
 ✅ Styling responsive dengan Bootstrap  
 ✅ Error handling & notifikasi interaktif  
@@ -18,19 +18,31 @@ Aplikasi web sederhana berbasis Laravel 12 + jQuery untuk manajemen produk — d
 
 ## 📦 Teknologi yang Digunakan
 
-- Laravel 12 (REST API)
-- MySQL / MariaDB
+- Laravel 12
+- MySQL
 - jQuery & AJAX
 - Bootstrap 5
 - Postman (for testing)
+- Sweetalert2
 
 ---
+
+## 🖥️ Environment & Tools Development
+
+- OS: Windows 11
+- Localhost: [Laragon](https://laragon.org/) (PHP 8.3, MySQL 8.0, Apache)
+- Database GUI: [HeidiSQL](https://www.heidisql.com/)
+- API Testing: Postman
+
+---
+
+
 
 ## ⚙️ Instalasi Project
 
 1. **Clone project**
 ```bash
-git clone https://github.com/username/mini-management-product.git
+git clone https://github.com/fajarmustaqin/mini-management-product.git
 cd mini-management-product
 ```
 
@@ -47,7 +59,7 @@ php artisan key:generate
 
 4. **Konfigurasi database di `.env`**
 ```dotenv
-DB_DATABASE=beeru_db
+DB_DATABASE=db_management_product
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -68,7 +80,7 @@ Akses: [http://localhost:8000](http://localhost:8000)
 
 ## 🧪 Tes API via Postman
 
-1. Import file: [`Beeru_Mini_Product_API.postman_collection.json`](./Beeru_Mini_Product_API.postman_collection.json)
+1. Import file: [`Mini Manajemen Produk API.postman_collection`](./Mini Manajemen Produk API.postman_collection)
 2. Ganti `{{base_url}}` menjadi `http://localhost:8000`
 
 ### Endpoint Tersedia:
@@ -94,17 +106,3 @@ app/Http/Controllers/
 database/seeders/
   └── ProductSeeder.php
 ```
-
----
-
-## 📬 Kontak
-
-Untuk keperluan rekrutmen, file ini disiapkan oleh:  
-**Nama:** [Isi Nama Kamu]  
-**Email:** [email@example.com]
-
----
-
-## ✅ Status
-
-Project ini telah selesai dan siap diuji sesuai instruksi studi kasus rekruitasi Beeru.
