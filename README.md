@@ -1,61 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛍️ Mini Product Management App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web sederhana berbasis Laravel 12 + jQuery untuk manajemen produk — dibuat sebagai studi kasus rekruitasi Beeru.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✅ CRUD Produk (Nama Produk, SKU, Harga, Stok)  
+✅ RESTful API dengan Laravel 12  
+✅ AJAX Interaktif (Tanpa Reload)  
+✅ Styling responsive dengan Bootstrap  
+✅ Error handling & notifikasi interaktif  
+✅ Dummy data siap pakai (Seeder)  
+✅ API siap dites via Postman  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📦 Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Laravel 12 (REST API)
+- MySQL / MariaDB
+- jQuery & AJAX
+- Bootstrap 5
+- Postman (for testing)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalasi Project
 
-## Laravel Sponsors
+1. **Clone project**
+```bash
+git clone https://github.com/username/mini-management-product.git
+cd mini-management-product
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install dependency**
+```bash
+composer install
+```
 
-### Premium Partners
+3. **Copy dan konfigurasi .env**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Konfigurasi database di `.env`**
+```dotenv
+DB_DATABASE=beeru_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Contributing
+5. **Migrasi + Seeder (isi dummy data)**
+```bash
+php artisan migrate:fresh --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Jalankan server**
+```bash
+php artisan serve
+```
 
-## Code of Conduct
+Akses: [http://localhost:8000](http://localhost:8000)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🧪 Tes API via Postman
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Import file: [`Beeru_Mini_Product_API.postman_collection.json`](./Beeru_Mini_Product_API.postman_collection.json)
+2. Ganti `{{base_url}}` menjadi `http://localhost:8000`
 
-## License
+### Endpoint Tersedia:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Method | Endpoint             | Keterangan          |
+|--------|----------------------|---------------------|
+| GET    | `/api/products`      | Ambil semua produk  |
+| POST   | `/api/products`      | Tambah produk       |
+| PUT    | `/api/products/{id}` | Update produk       |
+| DELETE | `/api/products/{id}` | Hapus produk        |
+
+---
+
+## 🧹 Struktur Folder Penting
+
+```
+routes/
+  └── api.php           # Endpoint API
+resources/views/
+  └── products.blade.php # Halaman frontend
+app/Http/Controllers/
+  └── ProductController.php
+database/seeders/
+  └── ProductSeeder.php
+```
+
+---
+
+## 📬 Kontak
+
+Untuk keperluan rekrutmen, file ini disiapkan oleh:  
+**Nama:** [Isi Nama Kamu]  
+**Email:** [email@example.com]
+
+---
+
+## ✅ Status
+
+Project ini telah selesai dan siap diuji sesuai instruksi studi kasus rekruitasi Beeru.
