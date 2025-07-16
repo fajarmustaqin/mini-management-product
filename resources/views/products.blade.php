@@ -230,7 +230,7 @@
                 $('#product_id').val(produk.id);
                 $('#nama_produk').val(produk.nama_produk);
                 $('#sku').val(produk.sku);
-                $('#harga').val(produk.harga);
+                hargaAuto.set(produk.harga); // ini penting
                 $('#stok').val(produk.stok);
                 $('#productModalLabel').text('Edit Produk');
                 $('#submitBtn').text('Update Produk');
