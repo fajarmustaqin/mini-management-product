@@ -19,11 +19,11 @@ Aplikasi web sederhana untuk manajemen produk
 ## 📦 Teknologi yang Digunakan
 
 - Laravel 12
-- MySQL
+- MySQL 8.0
 - jQuery & AJAX
 - Bootstrap 5
-- Postman (for testing)
-- Sweetalert2
+- Postman (testing API)
+- Sweetalert2 (notifikasi interaktif)
 
 ---
 
@@ -31,8 +31,9 @@ Aplikasi web sederhana untuk manajemen produk
 
 - OS: Windows 11
 - Localhost: [Laragon](https://laragon.org/) (PHP 8.3, MySQL 8.0, Apache)
+- Code Editor: [Visual Studio Code](https://code.visualstudio.com/)
 - Database GUI: [HeidiSQL](https://www.heidisql.com/)
-- API Testing: Postman
+- API Testing: [Postman](https://www.postman.com/)
 
 ---
 
