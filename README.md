@@ -54,17 +54,17 @@ composer install
 3. **Copy dan konfigurasi .env**
 ```bash
 cp .env.example .env
-php artisan key:generate
+php artisan key:generate  
 ```
 
-4. **Konfigurasi database di `.env`**
-```dotenv
-DB_DATABASE=db_management_product
-DB_USERNAME=root
-DB_PASSWORD=
+4. **Buat database di MySQL**
+Buat database baru dengan nama yang sesuai di `.env`, misalnya:
+```sql
+CREATE DATABASE db_management_product;
 ```
+> 💡 Kamu bisa membuat database menggunakan phpMyAdmin, HeidiSQL, atau MySQL CLI.
 
-5. **Migrasi + Seeder (isi dummy data)**
+5. **Migrasi tabel + isi dummy data**
 ```bash
 php artisan migrate:fresh --seed
 ```
