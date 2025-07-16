@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manajemen Produk - Beeru</title>
+    <title>Mini Manajemen Produk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="mb-2">
                         <label for="harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="harga" required>
+                        <input type="text" class="form-control" id="harga" required>
                     </div>
                     <div class="mb-2">
                         <label for="stok" class="form-label">Stok</label>
@@ -117,6 +117,7 @@
     <!-- Script -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.6.0/dist/autoNumeric.min.js"></script>
     <script>
         const API_URL = "/api/products";
         const modal = new bootstrap.Modal(document.getElementById('productModal'));
@@ -126,6 +127,16 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        // Terapkan format Rupiah
+        const hargaAuto = new AutoNumeric('#harga', {
+            digitGroupSeparator: '.',
+            decimalCharacter: ',',
+            decimalPlaces: 0,
+            currencySymbol: '',
+            unformatOnSubmit: true
+        });
+
 
         function showNotification(message, status = 'success') {
             Swal.fire({
