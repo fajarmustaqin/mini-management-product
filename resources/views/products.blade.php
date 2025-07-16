@@ -155,10 +155,10 @@
 
 
         function fetchProducts() {
-            $.get(API_URL, function(data) {
+            $.get(API_URL, function(res) {
                 let rows = '';
                 let no = 1;
-                data.forEach(item => {
+                res.data.forEach(item => {
                     rows += `
                         <tr>
                             <td>${no++}</td>
@@ -215,8 +215,8 @@
         });
 
         function editProduct(id) {
-            $.get(`${API_URL}`, function(data) {
-                const produk = data.find(p => p.id === id);
+            $.get(`${API_URL}`, function(res) {
+                const produk = res.data.find(p => p.id === id);
                 $('#product_id').val(produk.id);
                 $('#nama_produk').val(produk.nama_produk);
                 $('#sku').val(produk.sku);
